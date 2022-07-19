@@ -2,6 +2,7 @@
 
 const assert = require('assert');
 const readline = require('readline');
+const { start } = require('repl');
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
@@ -30,28 +31,62 @@ const printStacks = () => {
 }
 
 // Next, what do you think this function should do?
-const movePiece = () => {
-  // Your code here
-
+const movePiece = (startStack, endStack) => {
+  // Your code here to move last piece to selected stack
+  let removedBlock = stacks[startStack].pop()
+  stacks[endStack].push(removedBlock)
 }
 
 // Before you move, should you check if the move it actually allowed? Should 3 be able to be stacked on 2
-const isLegal = () => {
-  // Your code here
+const isLegal = (startStack, endStack) => {
+// Your code here to ensure disk is smaller than disk in stack--acces last item in stack .length-1
+//  if (startStack > endStack && stacks[startStack] > stacks[endStack]) {
+//   return false;
+//  } else {
+//   return true;
 
+
+let startingIndex = stacks[startStack].length-1
+let endingIndex = stacks[endStack].length-1
+let movingPiece = stacks[startStack][startingIndex]
+let moveTo = stacks[endStack][endingIndex]
+
+
+if (movingPiece > moveTo || stacks[startStack] == []) {
+// if (stacks[startStack][stacks[startStack].length-1]> stacks[endStack][stacks[endStack].length-1] || stacks[startStack] == []) {
+ return false;
+} else {
+  return true;
+}
 }
 
 // What is a win in Towers of Hanoi? When should this function run?
 const checkForWin = () => {
   // Your code here
+  if(stacks.b.length == 4) {
+    return true
+  } else {
+    return false;
+  }
+
+  //look at test-looking for length in array
+  //When all the blocks are stacked into column 2 or 1 the user is alerted they won
 
 }
 
 // When is this function called? What should it do with its argument?
 const towersOfHanoi = (startStack, endStack) => {
   // Your code here
-
+  if (isLegal(startStack, endStack)) {
+  movePiece(startStack, endStack) 
+  } else {
+    return 'Try another move!'
+  }
+  checkForWin() 
 }
+
+
+
 
 const getPrompt = () => {
   printStacks();
